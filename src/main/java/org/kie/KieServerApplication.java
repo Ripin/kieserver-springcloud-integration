@@ -21,9 +21,6 @@ public class KieServerApplication extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {
 		new SpringApplicationBuilder(KieServerApplication.class).web(true).run(args);
-		/*if(1==1){
-			throw new RuntimeException("方法水电费");
-		}*/
 	}
 
 
