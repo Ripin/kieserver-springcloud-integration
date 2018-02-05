@@ -2,42 +2,40 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-parent</artifactId>
-    <version>1.4.0.RELEASE</version>
+    <groupId>org.kie.server</groupId>
+    <artifactId>kie-server-wars</artifactId>
+    <version>7.5.0.Final</version>
   </parent>
+
+  <artifactId>kie-server</artifactId>
+  <packaging>pom</packaging>
+
+  <name>KIE :: Execution Server :: Wars :: Distribution Wars</name>
+  <description>KIE Execution Server Distribution Wars. Name of the module is just 'kie-server' so that the final WARs have nicer names.</description>
+
   <dependencyManagement>
     <dependencies>
       <dependency>
-        <groupId>org.kie.server</groupId>
-        <artifactId>kie-server-wars</artifactId>
-        <version>7.1.0.Final</version>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-dependencies</artifactId>
+        <version>Dalston.SR3</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
       <dependency>
-        <groupId>org.springframework.cloud</groupId>
-        <artifactId>spring-cloud-dependencies</artifactId>
-        <version>Camden.SR4</version>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.5.6.RELEASE</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
     </dependencies>
   </dependencyManagement>
 
-  <artifactId>kie-server</artifactId>
-  <packaging>pom</packaging>
-
-  <name>kie-server</name>
-  <description>KIE Execution Server Distribution Wars. Name of the module is just 'kie-server' so that the final WARs
-    have nicer names.
-  </description>
-
   <properties>
-    <jackson.version>2.6.2</jackson.version>
-    <hibernate.version>5.1.4.Final</hibernate.version>
-    <hibernate-validator.version>4.1.0.Final</hibernate-validator.version>
-    <version.org.apache.cxf>3.1.9</version.org.apache.cxf>
+    <java.module.name>org.kie.server.distribution.wars</java.module.name>
+    <spring.boot.starter.version>1.5.6.RELEASE</spring.boot.starter.version>
+    <spring.cloud.starter.eureka.version>1.3.4.RELEASE</spring.cloud.starter.eureka.version>
   </properties>
 
   <dependencies>
@@ -47,8 +45,11 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
-      <!-- 移除嵌入式tomcat插件,排除的方式会导致本地编译问题，故采取provided配置 -->
+<!--
+      <version>${spring.boot.starter.version}</version>
+-->
     </dependency>
+    <!-- 移除嵌入式tomcat插件,排除的方式会导致本地编译问题，故采取provided配置 -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-tomcat</artifactId>
@@ -69,8 +70,8 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-actuator</artifactId>
     </dependency>
-
     <!-- spring-cloud相关配置结束 -->
+
 
     <dependency>
       <groupId>org.kie.server</groupId>
@@ -127,10 +128,6 @@
     </dependency>
     <dependency>
       <groupId>org.kie.server</groupId>
-      <artifactId>kie-server-services-jbpm-search</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.kie.server</groupId>
       <artifactId>kie-server-services-jbpm-ui</artifactId>
       <exclusions>
         <exclusion>
@@ -182,6 +179,10 @@
     </dependency>
     <dependency>
       <groupId>org.kie.server</groupId>
+      <artifactId>kie-server-services-swagger</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.kie.server</groupId>
       <artifactId>kie-server-jms</artifactId>
     </dependency>
     <dependency>
@@ -195,10 +196,6 @@
     <dependency>
       <groupId>org.kie.server</groupId>
       <artifactId>kie-server-rest-jbpm</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.kie.server</groupId>
-      <artifactId>kie-server-rest-jbpm-search</artifactId>
     </dependency>
     <dependency>
       <groupId>org.kie.server</groupId>
@@ -217,11 +214,15 @@
     <dependency>
       <groupId>org.kie.server</groupId>
       <artifactId>kie-server-rest-dmn</artifactId>
-      <!-- TODO Exclusions? -->
+        <!-- TODO Exclusions? -->
     </dependency>
     <dependency>
       <groupId>org.kie.server</groupId>
       <artifactId>kie-server-rest-case-mgmt</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.kie.server</groupId>
+      <artifactId>kie-server-rest-swagger</artifactId>
     </dependency>
     <dependency>
       <groupId>org.kie.server</groupId>
@@ -235,6 +236,16 @@
     <dependency>
       <groupId>org.kie.server</groupId>
       <artifactId>kie-server-client</artifactId>
+    </dependency>
+    
+    <dependency>
+      <groupId>org.kie.server</groupId>
+      <artifactId>kie-server-controller-websocket-client</artifactId>
+    </dependency>
+    
+    <dependency>
+      <groupId>org.kie.server</groupId>
+      <artifactId>kie-server-controller-websocket-common</artifactId>
     </dependency>
 
     <dependency>
@@ -338,7 +349,6 @@
   </dependencies>
 
   <build>
-    <finalName>kie-server-${project.version}</finalName>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -352,6 +362,7 @@
           </execution>
         </executions>
         <configuration>
+          <finalName>kie-server-${project.version}</finalName>
           <descriptors>
             <!--<descriptor>src/main/assembly/assembly-ee6-container.xml</descriptor>
             <descriptor>src/main/assembly/assembly-ee7-container.xml</descriptor>-->
@@ -361,36 +372,9 @@
             <addMavenDescriptor>false</addMavenDescriptor>
             <!-- special manifest entries to allow usage of CXF on WebSphere -->
             <manifestEntries>
-              <Ignore-Scanning-Archives>
-                cxf-api-${version.org.apache.cxf}.jar,cxf-rt-bindings-soap-${version.org.apache.cxf}.jar,cxf-rt-bindings-xml-${version.org.apache.cxf}.jar,cxf-rt-core-${version.org.apache.cxf}.jar,cxf-rt-databinding-jaxb-${version.org.apache.cxf}.jar,cxf-rt-frontend-jaxws-${version.org.apache.cxf}.jar,cxf-rt-frontend-simple-${version.org.apache.cxf}.jar,cxf-rt-transports-http-${version.org.apache.cxf}.jar,cxf-rt-ws-addr-${version.org.apache.cxf}.jar,cxf-rt-ws-policy-${version.org.apache.cxf}.jar
-              </Ignore-Scanning-Archives>
+              <Ignore-Scanning-Archives>cxf-api-${version.org.apache.cxf}.jar,cxf-rt-bindings-soap-${version.org.apache.cxf}.jar,cxf-rt-bindings-xml-${version.org.apache.cxf}.jar,cxf-rt-core-${version.org.apache.cxf}.jar,cxf-rt-databinding-jaxb-${version.org.apache.cxf}.jar,cxf-rt-frontend-jaxws-${version.org.apache.cxf}.jar,cxf-rt-frontend-simple-${version.org.apache.cxf}.jar,cxf-rt-transports-http-${version.org.apache.cxf}.jar,cxf-rt-ws-addr-${version.org.apache.cxf}.jar,cxf-rt-ws-policy-${version.org.apache.cxf}.jar</Ignore-Scanning-Archives>
             </manifestEntries>
           </archive>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.projectodd.jrapidoc</groupId>
-        <artifactId>jrapidoc-rest-plugin</artifactId>
-        <version>0.5.0.Final</version>
-        <executions>
-          <execution>
-            <id>run</id>
-            <goals>
-              <goal>run</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <modelTarget>${project.build.directory}/rest-api-doc</modelTarget>
-          <groups>
-            <group>
-              <baseUrl>REMOTE-URL/services/rest</baseUrl>
-              <description>KIE Server REST API</description>
-              <includes>
-                <include>org.kie.server</include>
-              </includes>
-            </group>
-          </groups>
         </configuration>
       </plugin>
     </plugins>

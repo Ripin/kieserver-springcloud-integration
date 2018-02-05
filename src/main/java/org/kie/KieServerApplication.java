@@ -4,14 +4,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 
 /**
  * Created by RipinYan on 2017/10/11.
  */
 @SpringBootApplication
 @EnableDiscoveryClient
-@EnableEurekaClient
 public class KieServerApplication extends SpringBootServletInitializer {
 
 	@Override
