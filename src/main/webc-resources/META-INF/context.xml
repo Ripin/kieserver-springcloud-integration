@@ -11,4 +11,9 @@
   <Resource name="jdbc/jbpm" auth="Container" type="javax.sql.DataSource"
             username="jbpm" password="jbpm" driverClassName="com.arjuna.ats.jdbc.TransactionalDriver"
             url="jdbc:arjuna:java:comp/env/sharedDataSource" />
+
+  <!-- 非XA数据源
+  <Resource name="jdbc/jbpm" auth="Container" type="javax.sql.DataSource"
+            username="jbpm" password="jbpm" driverClassName="org.postgresql.Driver"
+            url="jdbc:postgresql:java:comp/env/sharedDataSource" />-->
 </Context>

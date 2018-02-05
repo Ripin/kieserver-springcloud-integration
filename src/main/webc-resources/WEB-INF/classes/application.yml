@@ -9,9 +9,6 @@ eureka:
       enabled: true
     service-url:
       defaultZone: http://localhost:8761/eureka/
-    registry-fetch-interval-seconds: 30
-    fetch-registry: false
-    enabled: false
-    register-with-eureka: false
+    registry-fetch-interval-seconds: 2
   instance:
-    lease-renewal-interval-in-seconds: 30
+    lease-renewal-interval-in-seconds: 2
