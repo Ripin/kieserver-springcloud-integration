@@ -1,5 +1,6 @@
 server:
   port: 8082
+
 spring:
   application:
     name: kie-server
@@ -13,4 +14,5 @@ eureka:
     fetchRegistry: true
     serviceUrl:
      #defaultZone: http://10.0.102.12:8761/eureka/
-     defaultZone: http://10.255.193.62:8761/eureka/
+     #defaultZone: http://10.255.193.62:8761/eureka/
+     defaultZone: http://localhost:8761/eureka/

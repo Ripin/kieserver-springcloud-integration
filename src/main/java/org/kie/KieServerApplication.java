@@ -6,7 +6,9 @@ import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 /**
- * Created by RipinYan on 2017/10/11.
+ * kie-server启动类
+ *
+ * @author RipinYan on 2017/10/11.
  */
 @SpringBootApplication
 @EnableDiscoveryClient
