@@ -33,6 +33,7 @@
   </dependencyManagement>
 
   <properties>
+    <start-class>org.kie.server.springboot.KieServerApplication</start-class>
     <java.module.name>org.kie.server.distribution.wars</java.module.name>
     <spring.boot.starter.version>1.5.6.RELEASE</spring.boot.starter.version>
     <spring.cloud.starter.eureka.version>1.3.4.RELEASE</spring.cloud.starter.eureka.version>
