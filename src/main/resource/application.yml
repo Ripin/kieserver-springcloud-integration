@@ -13,6 +13,7 @@ eureka:
     registerWithEureka: true
     fetchRegistry: true
     serviceUrl:
-     #defaultZone: http://10.0.102.12:8761/eureka/
+      defaultZone: http://10.0.102.12:8761/eureka/
      #defaultZone: http://10.255.193.62:8761/eureka/
-     defaultZone: http://localhost:8761/eureka/
+deploy:
+  releaseIds: com.myteam:notification:1.1,com.myteam:quotation:1.1

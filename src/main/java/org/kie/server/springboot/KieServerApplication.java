@@ -1,5 +1,6 @@
 package org.kie.server.springboot;
 
+import org.kie.server.springboot.listener.AutoDeployListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -22,7 +23,7 @@ public class KieServerApplication extends SpringBootServletInitializer {
 
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
-		builder.listeners(new AutoDeployHandler());
+		builder.listeners(new AutoDeployListener());
 		return builder.sources(KieServerApplication.class);
 	}
 
