@@ -1,8 +1,9 @@
 package org.kie.server.springboot.listener;
 
-import org.apache.commons.lang3.StringUtils;
+import java.util.List;
 import org.kie.server.api.model.KieContainerResource;
 import org.kie.server.api.model.ReleaseId;
+import org.kie.server.api.model.ServiceResponse;
 import org.kie.server.services.impl.KieServerImpl;
 import org.kie.server.services.impl.KieServerLocator;
 import org.kie.server.springboot.conf.KieServerConfig;
@@ -12,9 +13,13 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 
 /**
- * Created by RipinYan on 2018/3/12.
+ * 自动部署监听器
+ *
+ * @author Ripin Yan
+ * @ClassName: AutoDeployListener
+ * @Description: 自动部署监听器
+ * @date 2018/3/12 上午9:21
  */
-
 public class AutoDeployListener implements ApplicationListener<ContextRefreshedEvent> {
 	private static final Logger logger = LoggerFactory.getLogger(AutoDeployListener.class);
 
@@ -22,25 +27,23 @@ public class AutoDeployListener implements ApplicationListener<ContextRefreshedE
 	public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
 
 		KieServerImpl kieServer = KieServerLocator.getInstance();
-		String releaseIds = contextRefreshedEvent.getApplicationContext().getBean(KieServerConfig.class).getReleaseIds();
-		String[] releaseIdArray = null;
-		if (StringUtils.isNotBlank(releaseIds)) {
-			releaseIdArray = releaseIds.split(",");
-			if (releaseIdArray != null && releaseIdArray.length > 0) {
-				for (int i = 0; i < releaseIdArray.length; i++) {
+		List<String> releaseIds = contextRefreshedEvent.getApplicationContext().getBean(KieServerConfig.class).getReleaseIds();
+		logger.info("KieServer auto deploy start!");
 
-					String releaseIdString = releaseIdArray[i];
-					logger.info("About to deploy : {}", releaseIdString);
-					String[] gav = releaseIdString.split(":");
-					String containerId = gav[1] + "_" + gav[2];
-					ReleaseId releaseId = new ReleaseId(gav[0], gav[1], gav[2]);
-					KieContainerResource container = new KieContainerResource(containerId, releaseId);
-					container.setContainerAlias(gav[1]);
-					kieServer.createContainer(containerId, container);
-					logger.info("{} successfully deployed", releaseIdString);
-				}
+		if (releaseIds != null && releaseIds.size() > 0) {
+			for (int i = 0; i < releaseIds.size(); i++) {
+
+				String releaseIdString = releaseIds.get(i);
+				String[] gav = releaseIdString.split(":");
+				String containerId = gav[1] + "_" + gav[2];
+				ReleaseId releaseId = new ReleaseId(gav[0], gav[1], gav[2]);
+				KieContainerResource container = new KieContainerResource(containerId, releaseId);
+				container.setContainerAlias(gav[1]);
+				ServiceResponse<KieContainerResource> serviceResponse = kieServer.createContainer(containerId, container);
+				logger.info("***BPM-LOG***" + serviceResponse.getMsg());
 			}
 		}
-		logger.info("Auto deploy over!");
+
+		logger.info("KieServer auto deploy end!");
 	}
 }

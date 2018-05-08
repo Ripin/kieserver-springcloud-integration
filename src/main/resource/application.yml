@@ -1,19 +1,21 @@
 server:
-  port: 8082
+  port: 8821
 
 spring:
   application:
-    name: kie-server
+    name: tphw-service-kie-server
 
 eureka:
   instance:
     preferIpAddress: true
-    appname: kie-server
+    appname: tphw-service-kie-server
+    virtualHostName: ${eureka.instance.appname}
+
   client:
     registerWithEureka: true
     fetchRegistry: true
     serviceUrl:
       defaultZone: http://10.0.102.12:8761/eureka/
-     #defaultZone: http://10.255.193.62:8761/eureka/
 deploy:
-  releaseIds: com.myteam:notification:1.1,com.myteam:quotation:1.1
+  releaseIds:
+    - com.cntaiping.fsc.bpm:quotation:1.0.2

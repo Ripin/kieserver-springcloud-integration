@@ -1,6 +1,7 @@
 package org.kie.server.springboot.conf;
 
-import org.springframework.beans.factory.annotation.Value;
+import java.util.List;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -10,16 +11,16 @@ import org.springframework.context.annotation.Configuration;
  *
  */
 @Configuration
+@ConfigurationProperties(prefix = "deploy")
 public class KieServerConfig {
 
-	@Value("${deploy.releaseIds}")
-	private String releaseIds;
+	private List<String> releaseIds = null;
 
-	public String getReleaseIds() {
+	public List<String> getReleaseIds() {
 		return releaseIds;
 	}
 
-	public void setReleaseIds(String releaseIds) {
+	public void setReleaseIds(List<String> releaseIds) {
 		this.releaseIds = releaseIds;
 	}
 }
